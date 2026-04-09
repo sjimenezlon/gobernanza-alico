@@ -2,61 +2,63 @@
 
 import { useState, useEffect } from "react";
 import { getData, saveData, type Politica } from "@/lib/store";
+import AnimatedSection from "@/components/AnimatedSection";
+import { motion, AnimatePresence } from "framer-motion";
 
 const POLITICAS_DEFAULT: Politica[] = [
   {
-    titulo: "Politica General de Gobernanza de Datos",
+    titulo: "Política General de Gobernanza de Datos",
     objetivo:
-      "Establecer el marco general de gobernanza de datos de Alico Empaques, definiendo los principios, la estructura organizacional y los mecanismos de rendicion de cuentas para la gestion de datos como activo estrategico.",
+      "Establecer el marco general de gobernanza de datos de Alico Empaques, definiendo los principios, la estructura organizacional y los mecanismos de rendición de cuentas para la gestión de datos como activo estratégico.",
     alcance:
-      "Aplica a todas las areas de la organizacion, todos los tipos de datos (estructurados y no estructurados) y todos los sistemas de informacion de Alico Empaques S.A.S BIC.",
+      "Aplica a todas las áreas de la organización, todos los tipos de datos (estructurados y no estructurados) y todos los sistemas de información de Alico Empaques S.A.S BIC.",
     contenido: "",
     responsable: "Consejo de Gobernanza de Datos",
   },
   {
-    titulo: "Politica de Calidad de Datos",
+    titulo: "Política de Calidad de Datos",
     objetivo:
-      "Definir los estandares, metricas y procesos para asegurar que los datos de la organizacion cumplan con los niveles de exactitud, completitud, consistencia, oportunidad y validez requeridos por el negocio.",
+      "Definir los estándares, métricas y procesos para asegurar que los datos de la organización cumplan con los niveles de exactitud, completitud, consistencia, oportunidad y validez requeridos por el negocio.",
     alcance:
-      "Aplica a todos los dominios de datos criticos: Cliente, Producto, Proveedor, Financiero, Produccion y Cadena de Suministro. Incluye datos en sistemas ERP, CRM y sistemas complementarios.",
+      "Aplica a todos los dominios de datos críticos: Cliente, Producto, Proveedor, Financiero, Producción y Cadena de Suministro. Incluye datos en sistemas ERP, CRM y sistemas complementarios.",
     contenido: "",
-    responsable: "Comite Ejecutivo de Datos",
+    responsable: "Comité Ejecutivo de Datos",
   },
   {
-    titulo: "Politica de Seguridad y Privacidad de Datos",
+    titulo: "Política de Seguridad y Privacidad de Datos",
     objetivo:
-      "Garantizar la proteccion de los datos contra accesos no autorizados, perdida o alteracion, cumpliendo con la Ley 1581 de 2012 de proteccion de datos personales y los requisitos de seguridad del Operador Economico Autorizado (OEA).",
+      "Garantizar la protección de los datos contra accesos no autorizados, pérdida o alteración, cumpliendo con la Ley 1581 de 2012 de protección de datos personales y los requisitos de seguridad del Operador Económico Autorizado (OEA).",
     alcance:
-      "Aplica a todos los datos personales de empleados, clientes y proveedores, datos confidenciales de negocio, datos de comercio exterior y toda informacion sujeta a regulacion.",
+      "Aplica a todos los datos personales de empleados, clientes y proveedores, datos confidenciales de negocio, datos de comercio exterior y toda información sujeta a regulación.",
     contenido: "",
-    responsable: "Director de TI / Juridica",
+    responsable: "Director de TI / Jurídica",
   },
   {
-    titulo: "Politica de Acceso y Uso de Datos",
+    titulo: "Política de Acceso y Uso de Datos",
     objetivo:
-      "Regular quien puede acceder a que datos, bajo que condiciones y con que proposito, asegurando el principio de minimo privilegio y la trazabilidad de accesos.",
+      "Regular quién puede acceder a qué datos, bajo qué condiciones y con qué propósito, asegurando el principio de mínimo privilegio y la trazabilidad de accesos.",
     alcance:
-      "Aplica a todos los usuarios internos y externos que accedan a los sistemas de informacion de Alico Empaques. Cubre accesos a bases de datos, reportes, dashboards y archivos compartidos.",
+      "Aplica a todos los usuarios internos y externos que accedan a los sistemas de información de Alico Empaques. Cubre accesos a bases de datos, reportes, dashboards y archivos compartidos.",
     contenido: "",
     responsable: "Data Owners / TI",
   },
   {
-    titulo: "Politica de Gestion de Datos Maestros",
+    titulo: "Política de Gestión de Datos Maestros",
     objetivo:
-      "Establecer las reglas para la creacion, modificacion, desactivacion y mantenimiento de datos maestros (clientes, productos, proveedores, materiales), asegurando una fuente unica de verdad.",
+      "Establecer las reglas para la creación, modificación, desactivación y mantenimiento de datos maestros (clientes, productos, proveedores, materiales), asegurando una fuente única de verdad.",
     alcance:
-      "Aplica a los datos maestros de todos los dominios, con enfasis en los registros maestros del ERP y sistemas conectados. Incluye reglas de validacion, duplicados y ciclo de vida.",
+      "Aplica a los datos maestros de todos los dominios, con énfasis en los registros maestros del ERP y sistemas conectados. Incluye reglas de validación, duplicados y ciclo de vida.",
     contenido: "",
     responsable: "Data Owners de cada dominio",
   },
   {
-    titulo: "Politica de IA y Analitica",
+    titulo: "Política de IA y Analítica",
     objetivo:
-      "Guiar el diseno, desarrollo, despliegue y monitoreo de soluciones de inteligencia artificial y analitica avanzada de manera etica, transparente y segura, alineada con el NIST AI Risk Management Framework.",
+      "Guiar el diseño, desarrollo, despliegue y monitoreo de soluciones de inteligencia artificial y analítica avanzada de manera ética, transparente y segura, alineada con el NIST AI Risk Management Framework.",
     alcance:
-      "Aplica a todos los proyectos actuales y futuros de IA, machine learning, automatizacion inteligente y analitica avanzada en Alico Empaques. Incluye modelos predictivos, asistentes conversacionales y sistemas de recomendacion.",
+      "Aplica a todos los proyectos actuales y futuros de IA, machine learning, automatización inteligente y analítica avanzada en Alico Empaques. Incluye modelos predictivos, asistentes conversacionales y sistemas de recomendación.",
     contenido: "",
-    responsable: "Comite Ejecutivo de Datos / Gte. Gestion Tecnologica",
+    responsable: "Comité Ejecutivo de Datos / Gte. Gestión Tecnológica",
   },
 ];
 
@@ -120,252 +122,288 @@ export default function Paso7Politicas() {
 
   return (
     <div className="space-y-8">
-      {/* Introduccion */}
-      <section>
-        <h2 className="text-xl font-bold text-alico-dark mb-3">
-          Politicas de Gobernanza de Datos
-        </h2>
-        <p className="text-alico-gray mb-4">
-          Las politicas formalizan las reglas y principios que rigen la
-          gestion de datos en la organizacion. Cada politica tiene un
-          objetivo claro, un alcance definido y un contenido que detalla
-          las directrices especificas. Estas politicas son aprobadas por el
-          Consejo de Gobernanza y comunicadas a toda la organizacion.
-        </p>
-      </section>
+      {/* Introducción */}
+      <AnimatedSection delay={0.1}>
+        <section>
+          <h2 className="text-xl font-bold text-alico-dark mb-3">
+            Políticas de Gobernanza de Datos
+          </h2>
+          <p className="text-alico-gray mb-4">
+            Las políticas formalizan las reglas y principios que rigen la
+            gestión de datos en la organización. Cada política tiene un
+            objetivo claro, un alcance definido y un contenido que detalla
+            las directrices específicas. Estas políticas son aprobadas por el
+            Consejo de Gobernanza y comunicadas a toda la organización.
+          </p>
+        </section>
+      </AnimatedSection>
 
-      {/* Resumen de politicas */}
-      <section className="bg-white border rounded-xl p-5">
-        <h3 className="text-sm font-bold text-alico-dark mb-3">
-          Politicas definidas: {politicas.length}
-        </h3>
-        <div className="flex flex-wrap gap-2">
+      {/* Resumen de políticas */}
+      <AnimatedSection delay={0.2}>
+        <section className="bg-white border rounded-xl p-5">
+          <h3 className="text-sm font-bold text-alico-dark mb-3">
+            Políticas definidas: {politicas.length}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {politicas.map((pol, idx) => {
+              const tieneContenido = pol.contenido.trim().length > 0;
+              return (
+                <motion.button
+                  key={idx}
+                  type="button"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.25, delay: idx * 0.05 }}
+                  onClick={() => setExpandido(expandido === idx ? null : idx)}
+                  className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
+                    tieneContenido
+                      ? "bg-teal-100 text-teal-700 hover:bg-teal-200"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  } ${expandido === idx ? "ring-2 ring-alico-teal" : ""}`}
+                >
+                  {pol.titulo}
+                </motion.button>
+              );
+            })}
+          </div>
+        </section>
+      </AnimatedSection>
+
+      {/* Políticas expandibles */}
+      <AnimatedSection delay={0.3}>
+        <section className="space-y-4">
           {politicas.map((pol, idx) => {
-            const tieneContenido = pol.contenido.trim().length > 0;
+            const abierto = expandido === idx;
+
             return (
-              <button
+              <motion.div
                 key={idx}
-                type="button"
-                onClick={() => setExpandido(expandido === idx ? null : idx)}
-                className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors ${
-                  tieneContenido
-                    ? "bg-teal-100 text-teal-700 hover:bg-teal-200"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                } ${expandido === idx ? "ring-2 ring-alico-teal" : ""}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
+                className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden"
               >
-                {pol.titulo}
-              </button>
+                {/* Cabecera */}
+                <button
+                  type="button"
+                  onClick={() => setExpandido(abierto ? null : idx)}
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-alico-dark rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-xs font-bold">
+                        {idx + 1}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-alico-dark">
+                        {pol.titulo}
+                      </h3>
+                      <p className="text-xs text-alico-gray mt-0.5">
+                        Responsable: {pol.responsable || "Sin asignar"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {pol.contenido.trim().length > 0 && (
+                      <span className="text-xs bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full">
+                        Redactada
+                      </span>
+                    )}
+                    <motion.svg
+                      animate={{ rotate: abierto ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-5 h-5 text-alico-gray"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </motion.svg>
+                  </div>
+                </button>
+
+                {/* Contenido expandible */}
+                <AnimatePresence initial={false}>
+                  {abierto && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 pb-5 space-y-4 border-t border-gray-100 pt-4">
+                        {/* Título editable */}
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Título de la política
+                          </label>
+                          <input
+                            type="text"
+                            value={pol.titulo}
+                            onChange={(e) =>
+                              handleChange(idx, "titulo", e.target.value)
+                            }
+                            className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
+                          />
+                        </div>
+
+                        {/* Objetivo */}
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Objetivo
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={pol.objetivo}
+                            onChange={(e) =>
+                              handleChange(idx, "objetivo", e.target.value)
+                            }
+                            placeholder="Qué busca lograr esta política..."
+                            className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
+                          />
+                        </div>
+
+                        {/* Alcance */}
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Alcance
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={pol.alcance}
+                            onChange={(e) =>
+                              handleChange(idx, "alcance", e.target.value)
+                            }
+                            placeholder="A quiénes, qué datos y qué sistemas aplica esta política..."
+                            className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
+                          />
+                        </div>
+
+                        {/* Contenido principal */}
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Contenido de la política
+                          </label>
+                          <p className="text-xs text-alico-gray mb-2">
+                            Redacte aquí las directrices, principios, reglas y
+                            procedimientos específicos de la política. Sea lo más
+                            concreto posible para facilitar su implementación.
+                          </p>
+                          <textarea
+                            rows={10}
+                            value={pol.contenido}
+                            onChange={(e) =>
+                              handleChange(idx, "contenido", e.target.value)
+                            }
+                            placeholder="Redacte las directrices y reglas específicas de esta política..."
+                            className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent font-mono"
+                          />
+                        </div>
+
+                        {/* Responsable */}
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Responsable de la política
+                          </label>
+                          <input
+                            type="text"
+                            value={pol.responsable}
+                            onChange={(e) =>
+                              handleChange(idx, "responsable", e.target.value)
+                            }
+                            placeholder="Cargo o área responsable de la política..."
+                            className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
+                          />
+                        </div>
+
+                        {/* Botón eliminar */}
+                        <div className="pt-2 border-t border-gray-100">
+                          <button
+                            type="button"
+                            onClick={() => eliminarPolitica(idx)}
+                            className="text-sm text-red-600 hover:text-red-800 transition-colors"
+                          >
+                            Eliminar esta política
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
-      {/* Politicas expandibles */}
-      <section className="space-y-4">
-        {politicas.map((pol, idx) => {
-          const abierto = expandido === idx;
-
-          return (
-            <div
-              key={idx}
-              className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden"
+      {/* Agregar política */}
+      <AnimatedSection delay={0.4}>
+        <section className="bg-white border rounded-xl p-5">
+          <h3 className="text-sm font-bold text-alico-dark mb-3">
+            Agregar nueva política
+          </h3>
+          <div className="flex gap-3">
+            <input
+              type="text"
+              value={nuevaTitulo}
+              onChange={(e) => setNuevaTitulo(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && agregarPolitica()}
+              placeholder="Título de la nueva política..."
+              className="flex-1 border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
+            />
+            <button
+              type="button"
+              onClick={agregarPolitica}
+              className="px-5 py-3 bg-alico-dark text-white text-sm font-medium rounded-lg hover:bg-blue-900 transition-colors"
             >
-              {/* Cabecera */}
-              <button
-                type="button"
-                onClick={() => setExpandido(abierto ? null : idx)}
-                className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-alico-dark rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xs font-bold">
-                      {idx + 1}
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-alico-dark">
-                      {pol.titulo}
-                    </h3>
-                    <p className="text-xs text-alico-gray mt-0.5">
-                      Responsable: {pol.responsable || "Sin asignar"}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {pol.contenido.trim().length > 0 && (
-                    <span className="text-xs bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full">
-                      Redactada
-                    </span>
-                  )}
-                  <svg
-                    className={`w-5 h-5 text-alico-gray transition-transform ${
-                      abierto ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-              </button>
+              Agregar
+            </button>
+          </div>
+        </section>
+      </AnimatedSection>
 
-              {/* Contenido expandible */}
-              {abierto && (
-                <div className="px-5 pb-5 space-y-4 border-t border-gray-100 pt-4">
-                  {/* Titulo editable */}
-                  <div>
-                    <label className="block text-sm font-medium text-alico-dark mb-1">
-                      Titulo de la politica
-                    </label>
-                    <input
-                      type="text"
-                      value={pol.titulo}
-                      onChange={(e) =>
-                        handleChange(idx, "titulo", e.target.value)
-                      }
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
-                    />
-                  </div>
-
-                  {/* Objetivo */}
-                  <div>
-                    <label className="block text-sm font-medium text-alico-dark mb-1">
-                      Objetivo
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={pol.objetivo}
-                      onChange={(e) =>
-                        handleChange(idx, "objetivo", e.target.value)
-                      }
-                      placeholder="Que busca lograr esta politica..."
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
-                    />
-                  </div>
-
-                  {/* Alcance */}
-                  <div>
-                    <label className="block text-sm font-medium text-alico-dark mb-1">
-                      Alcance
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={pol.alcance}
-                      onChange={(e) =>
-                        handleChange(idx, "alcance", e.target.value)
-                      }
-                      placeholder="A quienes, que datos y que sistemas aplica esta politica..."
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
-                    />
-                  </div>
-
-                  {/* Contenido principal */}
-                  <div>
-                    <label className="block text-sm font-medium text-alico-dark mb-1">
-                      Contenido de la politica
-                    </label>
-                    <p className="text-xs text-alico-gray mb-2">
-                      Redacte aqui las directrices, principios, reglas y
-                      procedimientos especificos de la politica. Sea lo mas
-                      concreto posible para facilitar su implementacion.
-                    </p>
-                    <textarea
-                      rows={10}
-                      value={pol.contenido}
-                      onChange={(e) =>
-                        handleChange(idx, "contenido", e.target.value)
-                      }
-                      placeholder="Redacte las directrices y reglas especificas de esta politica..."
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent font-mono"
-                    />
-                  </div>
-
-                  {/* Responsable */}
-                  <div>
-                    <label className="block text-sm font-medium text-alico-dark mb-1">
-                      Responsable de la politica
-                    </label>
-                    <input
-                      type="text"
-                      value={pol.responsable}
-                      onChange={(e) =>
-                        handleChange(idx, "responsable", e.target.value)
-                      }
-                      placeholder="Cargo o area responsable de la politica..."
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
-                    />
-                  </div>
-
-                  {/* Boton eliminar */}
-                  <div className="pt-2 border-t border-gray-100">
-                    <button
-                      type="button"
-                      onClick={() => eliminarPolitica(idx)}
-                      className="text-sm text-red-600 hover:text-red-800 transition-colors"
-                    >
-                      Eliminar esta politica
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </section>
-
-      {/* Agregar politica */}
-      <section className="bg-white border rounded-xl p-5">
-        <h3 className="text-sm font-bold text-alico-dark mb-3">
-          Agregar nueva politica
-        </h3>
-        <div className="flex gap-3">
-          <input
-            type="text"
-            value={nuevaTitulo}
-            onChange={(e) => setNuevaTitulo(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && agregarPolitica()}
-            placeholder="Titulo de la nueva politica..."
-            className="flex-1 border border-gray-300 rounded-lg p-3 text-sm text-alico-dark focus:ring-2 focus:ring-alico-teal focus:border-transparent"
-          />
+      {/* Botón Guardar */}
+      <AnimatedSection delay={0.5}>
+        <div className="flex items-center gap-4">
           <button
             type="button"
-            onClick={agregarPolitica}
-            className="px-5 py-3 bg-alico-dark text-white text-sm font-medium rounded-lg hover:bg-blue-900 transition-colors"
+            onClick={guardar}
+            className="px-6 py-3 bg-alico-teal text-white font-medium rounded-lg hover:bg-teal-700 transition-colors"
           >
-            Agregar
+            Guardar Políticas
           </button>
+          <AnimatePresence>
+            {guardado && (
+              <motion.span
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                className="text-sm text-teal-700 font-medium"
+              >
+                Datos guardados correctamente.
+              </motion.span>
+            )}
+          </AnimatePresence>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Boton Guardar */}
-      <div className="flex items-center gap-4">
-        <button
-          type="button"
-          onClick={guardar}
-          className="px-6 py-3 bg-alico-teal text-white font-medium rounded-lg hover:bg-teal-700 transition-colors"
-        >
-          Guardar Politicas
-        </button>
-        {guardado && (
-          <span className="text-sm text-teal-700 font-medium">
-            Datos guardados correctamente.
-          </span>
-        )}
-      </div>
-
-      <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
-        <p className="text-sm text-teal-800">
-          <strong>Siguiente paso:</strong> Con las politicas redactadas,
-          avance al Paso 8 para definir los KPIs y metricas que permitiran
-          medir el exito de la gobernanza de datos.
-        </p>
-      </div>
+      <AnimatedSection delay={0.6}>
+        <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
+          <p className="text-sm text-teal-800">
+            <strong>Siguiente paso:</strong> Con las políticas redactadas,
+            avance al Paso 8 para definir los KPIs y métricas que permitirán
+            medir el éxito de la gobernanza de datos.
+          </p>
+        </div>
+      </AnimatedSection>
     </div>
   );
 }

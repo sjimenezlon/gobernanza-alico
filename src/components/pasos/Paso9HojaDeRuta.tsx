@@ -2,21 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { getData, saveData, type HitoRuta } from "@/lib/store";
+import AnimatedSection from "@/components/AnimatedSection";
 
 const HITOS_SUGERIDOS: HitoRuta[] = [
   // Fase 1
   {
-    fase: "Fase 1: Fundacion y Pilotaje",
-    titulo: "Constitucion del Consejo de Gobernanza de Datos",
+    fase: "Fase 1: Fundación y Pilotaje",
+    titulo: "Constitución del Consejo de Gobernanza de Datos",
     descripcion:
-      "Formalizar el consejo con representantes de Gerencia General, TI, PMO y las areas priorizadas. Definir el charter, frecuencia de sesiones y mecanismos de reporte.",
+      "Formalizar el consejo con representantes de Gerencia General, TI, PMO y las áreas priorizadas. Definir el charter, frecuencia de sesiones y mecanismos de reporte.",
     meses: "1-2",
     dominios: "Todos",
     estado: "pendiente",
   },
   {
-    fase: "Fase 1: Fundacion y Pilotaje",
-    titulo: "Designacion de Data Owners y Data Stewards",
+    fase: "Fase 1: Fundación y Pilotaje",
+    titulo: "Designación de Data Owners y Data Stewards",
     descripcion:
       "Asignar formalmente los roles de propietario y custodio de datos para el dominio piloto, con responsabilidades documentadas.",
     meses: "2-3",
@@ -24,84 +25,84 @@ const HITOS_SUGERIDOS: HitoRuta[] = [
     estado: "pendiente",
   },
   {
-    fase: "Fase 1: Fundacion y Pilotaje",
+    fase: "Fase 1: Fundación y Pilotaje",
     titulo: "Piloto de Gobernanza en Cadena de Suministro",
     descripcion:
-      "Implementar el modelo completo de gobernanza en el dominio de Cadena de Suministro: politicas, reglas de calidad, metricas y flujos de escalamiento.",
+      "Implementar el modelo completo de gobernanza en el dominio de Cadena de Suministro: políticas, reglas de calidad, métricas y flujos de escalamiento.",
     meses: "3-6",
     dominios: "Cadena de Suministro",
     estado: "pendiente",
   },
   {
-    fase: "Fase 1: Fundacion y Pilotaje",
-    titulo: "Definicion de Politicas y Estandares Base",
+    fase: "Fase 1: Fundación y Pilotaje",
+    titulo: "Definición de Políticas y Estándares Base",
     descripcion:
-      "Redactar y aprobar las politicas fundacionales de gobernanza de datos: clasificacion, calidad, seguridad y ciclo de vida.",
+      "Redactar y aprobar las políticas fundacionales de gobernanza de datos: clasificación, calidad, seguridad y ciclo de vida.",
     meses: "2-5",
     dominios: "Todos",
     estado: "pendiente",
   },
   // Fase 2
   {
-    fase: "Fase 2: Expansion y Madurez",
+    fase: "Fase 2: Expansión y Madurez",
     titulo: "Despliegue a Dominio de Producto",
     descripcion:
-      "Extender el modelo de gobernanza al dominio de Producto: asignacion de roles, politicas especificas de BOM y especificaciones tecnicas.",
+      "Extender el modelo de gobernanza al dominio de Producto: asignación de roles, políticas específicas de BOM y especificaciones técnicas.",
     meses: "7-10",
     dominios: "Producto",
     estado: "pendiente",
   },
   {
-    fase: "Fase 2: Expansion y Madurez",
+    fase: "Fase 2: Expansión y Madurez",
     titulo: "Despliegue a Dominio de Cliente",
     descripcion:
-      "Aplicar el modelo al dominio de Cliente: calidad de datos maestros, deduplicacion, reglas de validacion.",
+      "Aplicar el modelo al dominio de Cliente: calidad de datos maestros, deduplicación, reglas de validación.",
     meses: "9-12",
     dominios: "Cliente",
     estado: "pendiente",
   },
   {
-    fase: "Fase 2: Expansion y Madurez",
-    titulo: "Implementacion de Catalogo de Datos",
+    fase: "Fase 2: Expansión y Madurez",
+    titulo: "Implementación de Catálogo de Datos",
     descripcion:
-      "Seleccionar e implementar una herramienta de catalogo de datos para centralizar metadatos, linaje y diccionario de datos.",
+      "Seleccionar e implementar una herramienta de catálogo de datos para centralizar metadatos, linaje y diccionario de datos.",
     meses: "8-14",
     dominios: "Todos",
     estado: "pendiente",
   },
   {
-    fase: "Fase 2: Expansion y Madurez",
-    titulo: "Dashboard de Metricas de Gobernanza",
+    fase: "Fase 2: Expansión y Madurez",
+    titulo: "Dashboard de Métricas de Gobernanza",
     descripcion:
-      "Construir un tablero ejecutivo con los KPIs de gobernanza: calidad, cumplimiento, incidentes y satisfaccion de usuarios.",
+      "Construir un tablero ejecutivo con los KPIs de gobernanza: calidad, cumplimiento, incidentes y satisfacción de usuarios.",
     meses: "10-15",
     dominios: "Todos",
     estado: "pendiente",
   },
   // Fase 3
   {
-    fase: "Fase 3: Optimizacion e Innovacion",
-    titulo: "Gobernanza como Proceso Estandar",
+    fase: "Fase 3: Optimización e Innovación",
+    titulo: "Gobernanza como Proceso Estándar",
     descripcion:
-      "La gobernanza opera de forma integrada en todos los dominios. Procesos maduros con mejora continua, auditorias periodicas y optimizacion basada en datos.",
+      "La gobernanza opera de forma integrada en todos los dominios. Procesos maduros con mejora continua, auditorías periódicas y optimización basada en datos.",
     meses: "19-24",
     dominios: "Todos",
     estado: "pendiente",
   },
   {
-    fase: "Fase 3: Optimizacion e Innovacion",
+    fase: "Fase 3: Optimización e Innovación",
     titulo: "Iniciativas de IA a Escala",
     descripcion:
-      "Con datos gobernados y confiables, lanzar proyectos de IA y analitica avanzada: prediccion de demanda, mantenimiento predictivo, optimizacion de produccion.",
+      "Con datos gobernados y confiables, lanzar proyectos de IA y analítica avanzada: predicción de demanda, mantenimiento predictivo, optimización de producción.",
     meses: "20+",
     dominios: "Produccion, Cadena de Suministro",
     estado: "pendiente",
   },
   {
-    fase: "Fase 3: Optimizacion e Innovacion",
-    titulo: "Medicion de ROI y Valor Generado",
+    fase: "Fase 3: Optimización e Innovación",
+    titulo: "Medición de ROI y Valor Generado",
     descripcion:
-      "Evaluar el retorno sobre la inversion del programa de gobernanza: reduccion de errores, ahorro en reprocesos, mejora en tiempos de decision.",
+      "Evaluar el retorno sobre la inversión del programa de gobernanza: reducción de errores, ahorro en reprocesos, mejora en tiempos de decisión.",
     meses: "22+",
     dominios: "Financiero, Todos",
     estado: "pendiente",
@@ -110,25 +111,25 @@ const HITOS_SUGERIDOS: HitoRuta[] = [
 
 const FASES = [
   {
-    nombre: "Fase 1: Fundacion y Pilotaje",
+    nombre: "Fase 1: Fundación y Pilotaje",
     periodo: "Meses 1-6",
     color: "blue",
     descripcion:
       "Establecer el Consejo de Gobernanza y lanzar un piloto en el dominio de Cadena de Suministro.",
   },
   {
-    nombre: "Fase 2: Expansion y Madurez",
+    nombre: "Fase 2: Expansión y Madurez",
     periodo: "Meses 7-18",
     color: "teal",
     descripcion:
-      "Desplegar el modelo a dominios como Producto y Cliente. Implementar herramientas de catalogo de datos.",
+      "Desplegar el modelo a dominios como Producto y Cliente. Implementar herramientas de catálogo de datos.",
   },
   {
-    nombre: "Fase 3: Optimizacion e Innovacion",
+    nombre: "Fase 3: Optimización e Innovación",
     periodo: "Meses 19+",
     color: "amber",
     descripcion:
-      "La gobernanza opera como proceso estandar. Foco en ROI continuo y lanzamiento de iniciativas de IA a escala.",
+      "La gobernanza opera como proceso estándar. Foco en ROI continuo y lanzamiento de iniciativas de IA a escala.",
   },
 ];
 
@@ -209,278 +210,290 @@ export default function Paso9HojaDeRuta() {
 
   return (
     <div className="space-y-6">
-      {/* Introduccion */}
-      <div className="bg-white border rounded-xl p-6">
-        <h2 className="font-bold text-alico-dark mb-2">
-          Hoja de Ruta de Implementacion
-        </h2>
-        <p className="text-sm text-alico-gray">
-          La hoja de ruta sigue el enfoque de &quot;olas de valor&quot;: avanzar
-          de forma incremental, demostrando resultados en cada fase para
-          mantener el impulso y el patrocinio ejecutivo. Edite los hitos
-          sugeridos o agregue nuevos segun las prioridades de Alico.
-        </p>
-      </div>
+      {/* Introducción */}
+      <AnimatedSection>
+        <div className="bg-white border rounded-xl p-6">
+          <h2 className="font-bold text-alico-dark mb-2">
+            Hoja de Ruta de Implementación
+          </h2>
+          <p className="text-sm text-alico-gray">
+            La hoja de ruta sigue el enfoque de &quot;olas de valor&quot;: avanzar
+            de forma incremental, demostrando resultados en cada fase para
+            mantener el impulso y el patrocinio ejecutivo. Edite los hitos
+            sugeridos o agregue nuevos según las prioridades de Alico.
+          </p>
+        </div>
+      </AnimatedSection>
 
       {/* Timeline Visual */}
-      <div className="bg-white border rounded-xl p-6">
-        <h3 className="font-bold text-alico-dark mb-4">Vista General del Timeline</h3>
-        <div className="space-y-4">
-          {FASES.map((fase) => {
-            const hitosF = hitosPorFase(fase.nombre);
-            const completados = hitosF.filter((h) => h.estado === "completado").length;
-            const enCurso = hitosF.filter((h) => h.estado === "en_curso").length;
-            const c = colorFase(fase.nombre);
-            return (
-              <div key={fase.nombre} className={`border-2 ${c.border} rounded-xl p-5 ${c.bg}`}>
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <h4 className={`font-bold ${c.text}`}>{fase.nombre}</h4>
-                    <p className="text-xs text-alico-gray">{fase.periodo}</p>
+      <AnimatedSection delay={0.1}>
+        <div className="bg-white border rounded-xl p-6">
+          <h3 className="font-bold text-alico-dark mb-4">Vista General del Timeline</h3>
+          <div className="space-y-4">
+            {FASES.map((fase) => {
+              const hitosF = hitosPorFase(fase.nombre);
+              const completados = hitosF.filter((h) => h.estado === "completado").length;
+              const enCurso = hitosF.filter((h) => h.estado === "en_curso").length;
+              const c = colorFase(fase.nombre);
+              return (
+                <div key={fase.nombre} className={`border-2 ${c.border} rounded-xl p-5 ${c.bg}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h4 className={`font-bold ${c.text}`}>{fase.nombre}</h4>
+                      <p className="text-xs text-alico-gray">{fase.periodo}</p>
+                    </div>
+                    <div className="text-right text-xs">
+                      <span className="font-medium text-alico-dark">
+                        {hitosF.length} hitos
+                      </span>
+                      {completados > 0 && (
+                        <span className="ml-2 text-green-600">
+                          {completados} completados
+                        </span>
+                      )}
+                      {enCurso > 0 && (
+                        <span className="ml-2 text-amber-600">
+                          {enCurso} en curso
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="text-right text-xs">
-                    <span className="font-medium text-alico-dark">
-                      {hitosF.length} hitos
-                    </span>
-                    {completados > 0 && (
-                      <span className="ml-2 text-green-600">
-                        {completados} completados
-                      </span>
-                    )}
-                    {enCurso > 0 && (
-                      <span className="ml-2 text-amber-600">
-                        {enCurso} en curso
-                      </span>
-                    )}
+                  <p className="text-sm text-alico-gray mb-3">{fase.descripcion}</p>
+                  {/* Progress bar */}
+                  <div className="w-full bg-white/60 rounded-full h-2">
+                    <div
+                      className={`${c.bar} h-2 rounded-full transition-all`}
+                      style={{
+                        width:
+                          hitosF.length > 0
+                            ? `${((completados + enCurso * 0.5) / hitosF.length) * 100}%`
+                            : "0%",
+                      }}
+                    />
                   </div>
                 </div>
-                <p className="text-sm text-alico-gray mb-3">{fase.descripcion}</p>
-                {/* Progress bar */}
-                <div className="w-full bg-white/60 rounded-full h-2">
-                  <div
-                    className={`${c.bar} h-2 rounded-full transition-all`}
-                    style={{
-                      width:
-                        hitosF.length > 0
-                          ? `${((completados + enCurso * 0.5) / hitosF.length) * 100}%`
-                          : "0%",
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </AnimatedSection>
 
       {/* Filtro por fase */}
-      <div className="flex flex-wrap gap-2">
-        <button
-          onClick={() => setFaseActiva(null)}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-            faseActiva === null
-              ? "bg-alico-dark text-white"
-              : "bg-white border text-alico-gray hover:border-alico-teal"
-          }`}
-        >
-          Todas las Fases
-        </button>
-        {FASES.map((fase) => (
+      <AnimatedSection delay={0.2}>
+        <div className="flex flex-wrap gap-2">
           <button
-            key={fase.nombre}
-            onClick={() => setFaseActiva(fase.nombre)}
+            onClick={() => setFaseActiva(null)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              faseActiva === fase.nombre
+              faseActiva === null
                 ? "bg-alico-dark text-white"
                 : "bg-white border text-alico-gray hover:border-alico-teal"
             }`}
           >
-            {fase.nombre.split(":")[0]}
-            <span className="ml-2 text-xs opacity-70">
-              {hitosPorFase(fase.nombre).length}
-            </span>
+            Todas las Fases
           </button>
-        ))}
-      </div>
+          {FASES.map((fase) => (
+            <button
+              key={fase.nombre}
+              onClick={() => setFaseActiva(fase.nombre)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                faseActiva === fase.nombre
+                  ? "bg-alico-dark text-white"
+                  : "bg-white border text-alico-gray hover:border-alico-teal"
+              }`}
+            >
+              {fase.nombre.split(":")[0]}
+              <span className="ml-2 text-xs opacity-70">
+                {hitosPorFase(fase.nombre).length}
+              </span>
+            </button>
+          ))}
+        </div>
+      </AnimatedSection>
 
       {/* Lista de Hitos */}
-      <div className="space-y-4">
-        {hitos
-          .map((hito, idx) => ({ hito, idx }))
-          .filter(({ hito }) => !faseActiva || hito.fase === faseActiva)
-          .map(({ hito, idx }) => {
-            const expandido = editandoIdx === idx;
-            const c = colorFase(hito.fase);
-            return (
-              <div
-                key={idx}
-                className="bg-white border rounded-xl overflow-hidden"
-              >
-                {/* Cabecera */}
-                <button
-                  onClick={() => setEditandoIdx(expandido ? null : idx)}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
+      <AnimatedSection delay={0.3}>
+        <div className="space-y-4">
+          {hitos
+            .map((hito, idx) => ({ hito, idx }))
+            .filter(({ hito }) => !faseActiva || hito.fase === faseActiva)
+            .map(({ hito, idx }) => {
+              const expandido = editandoIdx === idx;
+              const c = colorFase(hito.fase);
+              return (
+                <div
+                  key={idx}
+                  className="bg-white border rounded-xl overflow-hidden"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-1.5 h-12 rounded-full ${c.bar} flex-shrink-0`} />
-                    <div>
-                      <p className="font-medium text-alico-dark">
-                        {hito.titulo || "(Sin titulo)"}
-                      </p>
-                      <div className="flex gap-2 mt-1 flex-wrap">
-                        <span className={`text-xs px-2 py-0.5 rounded ${colorEstado(hito.estado)}`}>
-                          {ESTADOS.find((e) => e.valor === hito.estado)?.etiqueta}
-                        </span>
-                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
-                          Meses {hito.meses}
-                        </span>
-                        <span className={`text-xs ${c.bg} ${c.text} px-2 py-0.5 rounded`}>
-                          {hito.dominios}
-                        </span>
+                  {/* Cabecera */}
+                  <button
+                    onClick={() => setEditandoIdx(expandido ? null : idx)}
+                    className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-1.5 h-12 rounded-full ${c.bar} flex-shrink-0`} />
+                      <div>
+                        <p className="font-medium text-alico-dark">
+                          {hito.titulo || "(Sin título)"}
+                        </p>
+                        <div className="flex gap-2 mt-1 flex-wrap">
+                          <span className={`text-xs px-2 py-0.5 rounded ${colorEstado(hito.estado)}`}>
+                            {ESTADOS.find((e) => e.valor === hito.estado)?.etiqueta}
+                          </span>
+                          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
+                            Meses {hito.meses}
+                          </span>
+                          <span className={`text-xs ${c.bg} ${c.text} px-2 py-0.5 rounded`}>
+                            {hito.dominios}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <span className="text-alico-gray text-sm flex-shrink-0 ml-2">
-                    {expandido ? "Contraer" : "Editar"}
-                  </span>
-                </button>
+                    <span className="text-alico-gray text-sm flex-shrink-0 ml-2">
+                      {expandido ? "Contraer" : "Editar"}
+                    </span>
+                  </button>
 
-                {/* Contenido expandido */}
-                {expandido && (
-                  <div className="border-t p-5 space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-alico-dark mb-1">
-                        Fase
-                      </label>
-                      <select
-                        className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
-                        value={hito.fase}
-                        onChange={(e) =>
-                          actualizarHito(idx, "fase", e.target.value)
-                        }
-                      >
-                        {FASES.map((f) => (
-                          <option key={f.nombre} value={f.nombre}>
-                            {f.nombre}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-alico-dark mb-1">
-                        Titulo del Hito
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
-                        value={hito.titulo}
-                        onChange={(e) =>
-                          actualizarHito(idx, "titulo", e.target.value)
-                        }
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-alico-dark mb-1">
-                        Descripcion
-                      </label>
-                      <textarea
-                        className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
-                        rows={3}
-                        value={hito.descripcion}
-                        onChange={(e) =>
-                          actualizarHito(idx, "descripcion", e.target.value)
-                        }
-                      />
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-4">
+                  {/* Contenido expandido */}
+                  {expandido && (
+                    <div className="border-t p-5 space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-alico-dark mb-1">
-                          Meses
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
-                          value={hito.meses}
-                          onChange={(e) =>
-                            actualizarHito(idx, "meses", e.target.value)
-                          }
-                          placeholder="Ej: 1-3"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-alico-dark mb-1">
-                          Dominios
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
-                          value={hito.dominios}
-                          onChange={(e) =>
-                            actualizarHito(idx, "dominios", e.target.value)
-                          }
-                          placeholder="Ej: Cliente, Producto"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-alico-dark mb-1">
-                          Estado
+                          Fase
                         </label>
                         <select
                           className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
-                          value={hito.estado}
+                          value={hito.fase}
                           onChange={(e) =>
-                            actualizarHito(idx, "estado", e.target.value)
+                            actualizarHito(idx, "fase", e.target.value)
                           }
                         >
-                          {ESTADOS.map((est) => (
-                            <option key={est.valor} value={est.valor}>
-                              {est.etiqueta}
+                          {FASES.map((f) => (
+                            <option key={f.nombre} value={f.nombre}>
+                              {f.nombre}
                             </option>
                           ))}
                         </select>
                       </div>
-                    </div>
 
-                    <div className="flex justify-end">
-                      <button
-                        onClick={() => eliminarHito(idx)}
-                        className="text-sm text-alico-red hover:underline"
-                      >
-                        Eliminar este hito
-                      </button>
+                      <div>
+                        <label className="block text-sm font-medium text-alico-dark mb-1">
+                          Título del Hito
+                        </label>
+                        <input
+                          type="text"
+                          className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
+                          value={hito.titulo}
+                          onChange={(e) =>
+                            actualizarHito(idx, "titulo", e.target.value)
+                          }
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-alico-dark mb-1">
+                          Descripción
+                        </label>
+                        <textarea
+                          className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
+                          rows={3}
+                          value={hito.descripcion}
+                          onChange={(e) =>
+                            actualizarHito(idx, "descripcion", e.target.value)
+                          }
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Meses
+                          </label>
+                          <input
+                            type="text"
+                            className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
+                            value={hito.meses}
+                            onChange={(e) =>
+                              actualizarHito(idx, "meses", e.target.value)
+                            }
+                            placeholder="Ej: 1-3"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Dominios
+                          </label>
+                          <input
+                            type="text"
+                            className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
+                            value={hito.dominios}
+                            onChange={(e) =>
+                              actualizarHito(idx, "dominios", e.target.value)
+                            }
+                            placeholder="Ej: Cliente, Producto"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-alico-dark mb-1">
+                            Estado
+                          </label>
+                          <select
+                            className="w-full border rounded-lg p-2 text-sm focus:border-alico-teal focus:outline-none"
+                            value={hito.estado}
+                            onChange={(e) =>
+                              actualizarHito(idx, "estado", e.target.value)
+                            }
+                          >
+                            {ESTADOS.map((est) => (
+                              <option key={est.valor} value={est.valor}>
+                                {est.etiqueta}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end">
+                        <button
+                          onClick={() => eliminarHito(idx)}
+                          className="text-sm text-alico-red hover:underline"
+                        >
+                          Eliminar este hito
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-      </div>
+                  )}
+                </div>
+              );
+            })}
+        </div>
+      </AnimatedSection>
 
       {/* Agregar Hito */}
-      <button
-        onClick={agregarHito}
-        className="w-full border-2 border-dashed border-gray-300 rounded-xl p-4 text-sm text-alico-gray hover:border-alico-teal hover:text-alico-teal transition-colors"
-      >
-        + Agregar hito personalizado
-      </button>
+      <AnimatedSection delay={0.4}>
+        <button
+          onClick={agregarHito}
+          className="w-full border-2 border-dashed border-gray-300 rounded-xl p-4 text-sm text-alico-gray hover:border-alico-teal hover:text-alico-teal transition-colors"
+        >
+          + Agregar hito personalizado
+        </button>
+      </AnimatedSection>
 
       {/* Guardar */}
-      <div className="flex items-center justify-between bg-white border rounded-xl p-4">
-        <div className="text-sm text-alico-gray">
-          {hitos.length} hitos en la hoja de ruta
+      <AnimatedSection delay={0.5}>
+        <div className="flex items-center justify-between bg-white border rounded-xl p-4">
+          <div className="text-sm text-alico-gray">
+            {hitos.length} hitos en la hoja de ruta
+          </div>
+          <button
+            onClick={guardar}
+            className="bg-alico-teal text-white px-6 py-2 rounded-lg font-medium hover:bg-teal-700 transition-colors"
+          >
+            {guardado ? "Guardado!" : "Guardar Hoja de Ruta"}
+          </button>
         </div>
-        <button
-          onClick={guardar}
-          className="bg-alico-teal text-white px-6 py-2 rounded-lg font-medium hover:bg-teal-700 transition-colors"
-        >
-          {guardado ? "Guardado!" : "Guardar Hoja de Ruta"}
-        </button>
-      </div>
+      </AnimatedSection>
     </div>
   );
 }
