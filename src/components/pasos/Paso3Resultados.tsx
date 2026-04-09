@@ -48,6 +48,108 @@ function AnimatedCounter({ value, decimals = 1, className = "" }: { value: numbe
   );
 }
 
+function RadarChart({ datos }: { datos: { label: string; valor: number }[] }) {
+  const size = 300;
+  const center = size / 2;
+  const radius = 120;
+  const levels = 5;
+  const angleStep = (2 * Math.PI) / datos.length;
+
+  const getPoint = (i: number, level: number) => {
+    const angle = angleStep * i - Math.PI / 2;
+    const r = (radius * level) / levels;
+    return {
+      x: center + r * Math.cos(angle),
+      y: center + r * Math.sin(angle),
+    };
+  };
+
+  const dataPoints = datos.map((d, i) => {
+    const angle = angleStep * i - Math.PI / 2;
+    const r = (radius * d.valor) / levels;
+    return { x: center + r * Math.cos(angle), y: center + r * Math.sin(angle) };
+  });
+
+  const dataPath =
+    dataPoints.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") + " Z";
+
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} className="w-full max-w-[320px] mx-auto">
+      {/* Grid levels */}
+      {Array.from({ length: levels }, (_, l) => {
+        const pts = datos.map((_, i) => getPoint(i, l + 1));
+        const path =
+          pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") + " Z";
+        return (
+          <path
+            key={l}
+            d={path}
+            fill="none"
+            stroke="#e2e8f0"
+            strokeWidth={l === levels - 1 ? 1.5 : 0.5}
+          />
+        );
+      })}
+
+      {/* Axes */}
+      {datos.map((_, i) => {
+        const end = getPoint(i, levels);
+        return (
+          <line
+            key={i}
+            x1={center}
+            y1={center}
+            x2={end.x}
+            y2={end.y}
+            stroke="#e2e8f0"
+            strokeWidth={0.5}
+          />
+        );
+      })}
+
+      {/* Data area */}
+      <path d={dataPath} fill="rgba(44, 122, 123, 0.2)" stroke="#2c7a7b" strokeWidth={2} />
+
+      {/* Data points */}
+      {dataPoints.map((p, i) => (
+        <circle key={i} cx={p.x} cy={p.y} r={4} fill="#2c7a7b" />
+      ))}
+
+      {/* Labels */}
+      {datos.map((d, i) => {
+        const angle = angleStep * i - Math.PI / 2;
+        const labelR = radius + 24;
+        const x = center + labelR * Math.cos(angle);
+        const y = center + labelR * Math.sin(angle);
+        return (
+          <text
+            key={i}
+            x={x}
+            y={y}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="text-[10px] fill-alico-dark font-medium"
+          >
+            {d.label}
+          </text>
+        );
+      })}
+
+      {/* Level labels */}
+      {Array.from({ length: levels }, (_, l) => (
+        <text
+          key={l}
+          x={center + 4}
+          y={center - (radius * (l + 1)) / levels + 3}
+          className="text-[8px] fill-gray-400"
+        >
+          {l + 1}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
 export default function Paso3Resultados() {
   const [resultados, setResultados] = useState<DominioResultado[]>([]);
   const [mounted, setMounted] = useState(false);
@@ -173,6 +275,23 @@ export default function Paso3Resultados() {
               <div className="text-sm text-alico-red mt-1">requieren atención</div>
             </div>
           </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Radar de madurez */}
+      <AnimatedSection delay={0.15}>
+        <div className="bg-white border rounded-xl p-6 shadow-sm">
+          <h2 className="text-xl font-bold text-alico-dark mb-4 text-center">
+            Mapa de Madurez por Dominio
+          </h2>
+          <RadarChart
+            datos={resultados
+              .filter((r) => r.promedio > 0)
+              .map((r) => ({ label: r.dominio, valor: r.promedio }))}
+          />
+          <p className="text-xs text-alico-gray text-center mt-3">
+            El área sombreada representa el nivel actual. Un hexágono completo indica madurez nivel 5 en todos los dominios.
+          </p>
         </div>
       </AnimatedSection>
 

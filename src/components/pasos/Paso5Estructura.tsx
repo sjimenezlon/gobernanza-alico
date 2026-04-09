@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getData, saveData } from "@/lib/store";
+import { getData, saveData, DominioConfig } from "@/lib/store";
 import AnimatedSection from "@/components/AnimatedSection";
 import { motion } from "framer-motion";
 
@@ -77,11 +77,15 @@ export default function Paso5Estructura() {
     notas: "",
   });
   const [guardado, setGuardado] = useState(false);
+  const [dominiosData, setDominiosData] = useState<DominioConfig[]>([]);
 
   useEffect(() => {
     const data = getData();
     if (data.estructuraGobierno) {
       setEstructura(data.estructuraGobierno);
+    }
+    if (data.dominios) {
+      setDominiosData(data.dominios);
     }
   }, []);
 
@@ -112,6 +116,29 @@ export default function Paso5Estructura() {
           </p>
         </section>
       </AnimatedSection>
+
+      {/* Datos de dominios (del Paso 4) */}
+      {dominiosData.length > 0 && (
+        <AnimatedSection delay={0.15}>
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+            <h3 className="text-sm font-bold text-blue-800 mb-3">
+              Asignaciones actuales desde el Paso 4 (Dominios)
+            </h3>
+            <div className="grid md:grid-cols-3 gap-3">
+              {dominiosData.map((d) => (
+                <div key={d.nombre} className="bg-white rounded-lg p-3 text-xs">
+                  <p className="font-bold text-alico-dark">{d.nombre}</p>
+                  <p className="text-alico-gray">Owner: {d.propietario || "—"}</p>
+                  <p className="text-alico-gray">Steward: {d.custodio || "—"}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-blue-700 mt-2">
+              Use esta información para definir la estructura formal a continuación.
+            </p>
+          </div>
+        </AnimatedSection>
+      )}
 
       {/* Jerarquía visual */}
       <AnimatedSection delay={0.2}>

@@ -48,6 +48,12 @@ export const PREGUNTAS: PreguntaDiagnostico[] = [
     pregunta: "¿Existen políticas de privacidad y protección de datos personales de clientes?",
     ayuda: "¿Se cumple con la Ley 1581 de protección de datos personales? ¿Hay consentimientos documentados?",
   },
+  {
+    id: "cli-5",
+    dominio: "Cliente",
+    pregunta: "¿Se realizan análisis periódicos de segmentación y comportamiento de clientes basados en datos?",
+    ayuda: "¿Existen reportes regulares de patrones de compra, rentabilidad por cliente, o churn?",
+  },
   // Producto
   {
     id: "pro-1",
@@ -73,6 +79,12 @@ export const PREGUNTAS: PreguntaDiagnostico[] = [
     pregunta: "¿Los datos de innovación y desarrollo de nuevos productos se gestionan de forma estructurada?",
     ayuda: "¿Hay un repositorio de pruebas, prototipos y resultados de I+D?",
   },
+  {
+    id: "pro-5",
+    dominio: "Producto",
+    pregunta: "¿Los datos de sostenibilidad del producto (huella de carbono, material reciclado) se registran y son trazables?",
+    ayuda: "¿Puede Alico responder a un cliente que pide datos de huella de carbono de un producto específico?",
+  },
   // Proveedor
   {
     id: "prv-1",
@@ -91,6 +103,12 @@ export const PREGUNTAS: PreguntaDiagnostico[] = [
     dominio: "Proveedor",
     pregunta: "¿Existe un proceso de evaluación y selección de proveedores basado en datos?",
     ayuda: "¿Las decisiones de compra se apoyan en métricas de calidad, costo y cumplimiento?",
+  },
+  {
+    id: "prv-4",
+    dominio: "Proveedor",
+    pregunta: "¿Se monitorean indicadores de riesgo de proveedores críticos de forma proactiva?",
+    ayuda: "¿Hay alertas cuando un proveedor clave tiene problemas de calidad, tiempos o financieros?",
   },
   // Financiero
   {
@@ -111,6 +129,12 @@ export const PREGUNTAS: PreguntaDiagnostico[] = [
     pregunta: "¿Existe un proceso claro de validación y auditoría de datos financieros?",
     ayuda: "¿Hay controles automatizados o manuales que aseguren la integridad de los datos financieros?",
   },
+  {
+    id: "fin-4",
+    dominio: "Financiero",
+    pregunta: "¿Los datos de costos de producción están integrados con los sistemas de planeación financiera?",
+    ayuda: "¿Se puede calcular el costo real por producto en tiempo cercano al real?",
+  },
   // Producción
   {
     id: "prd-1",
@@ -129,6 +153,18 @@ export const PREGUNTAS: PreguntaDiagnostico[] = [
     dominio: "Produccion",
     pregunta: "¿Los indicadores de eficiencia productiva son confiables y se usan para tomar decisiones?",
     ayuda: "¿Los gerentes confían en los datos de producción o sienten que necesitan verificar manualmente?",
+  },
+  {
+    id: "prd-4",
+    dominio: "Produccion",
+    pregunta: "¿Los datos de calidad en línea (inspección visual, cromatografía) se integran con los registros de producción?",
+    ayuda: "¿Se correlacionan automáticamente los resultados de inspección con lotes y órdenes de producción?",
+  },
+  {
+    id: "prd-5",
+    dominio: "Produccion",
+    pregunta: "¿Existen datos históricos suficientes para implementar mantenimiento predictivo?",
+    ayuda: "¿Se tienen registros de al menos 12 meses de fallas, intervenciones y condiciones operativas?",
   },
   // Cadena de Suministro
   {
@@ -154,5 +190,17 @@ export const PREGUNTAS: PreguntaDiagnostico[] = [
     dominio: "Cadena de Suministro",
     pregunta: "¿Existe integración de datos entre las áreas de compras, almacén y despachos?",
     ayuda: "¿La información fluye entre estas áreas o cada una maneja sus propios registros?",
+  },
+  {
+    id: "cs-5",
+    dominio: "Cadena de Suministro",
+    pregunta: "¿Los datos de demanda y pronóstico se comparten entre las áreas de ventas, planeación y producción?",
+    ayuda: "¿Hay un proceso formal S&OP (Sales & Operations Planning) basado en datos integrados?",
+  },
+  {
+    id: "cs-6",
+    dominio: "Cadena de Suministro",
+    pregunta: "¿Se miden y analizan los costos logísticos por ruta, cliente o tipo de despacho?",
+    ayuda: "¿Los datos logísticos permiten optimizar rutas y reducir costos de distribución?",
   },
 ];
