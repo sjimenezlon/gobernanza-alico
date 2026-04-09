@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getData, saveData, type KPI } from "@/lib/store";
+import { generarKPIsExcel } from "@/lib/generarDocumentos";
 import AnimatedSection from "@/components/AnimatedSection";
 
 const KPI_SUGERIDOS: KPI[] = [
@@ -354,16 +355,27 @@ export default function Paso8KPIs() {
 
       {/* Guardar */}
       <AnimatedSection delay={0.4}>
-        <div className="flex items-center justify-between bg-white border rounded-xl p-4">
+        <div className="flex items-center justify-between bg-white border rounded-xl p-4 flex-wrap gap-3">
           <div className="text-sm text-alico-gray">
             {kpis.length} indicadores definidos
           </div>
-          <button
-            onClick={guardar}
-            className="bg-alico-teal text-white px-6 py-2 rounded-lg font-medium hover:bg-teal-700 transition-colors"
-          >
-            {guardado ? "Guardado!" : "Guardar KPIs"}
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={generarKPIsExcel}
+              className="bg-white border border-alico-dark text-alico-dark px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors flex items-center gap-1"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3" />
+              </svg>
+              Excel/CSV
+            </button>
+            <button
+              onClick={guardar}
+              className="bg-alico-teal text-white px-6 py-2 rounded-lg font-medium hover:bg-teal-700 transition-colors"
+            >
+              {guardado ? "¡Guardado!" : "Guardar KPIs"}
+            </button>
+          </div>
         </div>
       </AnimatedSection>
     </div>

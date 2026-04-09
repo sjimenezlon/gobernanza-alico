@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import AnimatedSection from "@/components/AnimatedSection";
 import { getData } from "@/lib/store";
+import { generarInformeDiagnostico, generarDiagnosticoExcel } from "@/lib/generarDocumentos";
 import { DOMINIOS_DIAGNOSTICO, PREGUNTAS, NIVELES_MADUREZ } from "@/lib/diagnostico-preguntas";
 
 interface DominioResultado {
@@ -364,17 +365,59 @@ export default function Paso3Resultados() {
         </div>
       </AnimatedSection>
 
-      {/* Botón exportar */}
+      {/* ¿Qué hacer con estos resultados? */}
       <AnimatedSection delay={0.5}>
-        <div className="flex justify-center">
-          <motion.button
-            onClick={() => window.print()}
-            className="bg-alico-dark text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-900 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            Exportar Resultados (Imprimir/PDF)
-          </motion.button>
+        <div className="bg-gradient-to-br from-blue-50 to-teal-50 border border-blue-200 rounded-xl p-6">
+          <h2 className="text-lg font-bold text-alico-dark mb-3">
+            ¿Qué hacer con estos resultados?
+          </h2>
+          <div className="grid md:grid-cols-3 gap-3 text-sm mb-4">
+            <div className="bg-white/80 rounded-lg p-3">
+              <h4 className="font-bold text-alico-dark mb-1">Socializar</h4>
+              <p className="text-xs text-alico-gray">
+                Descargue el informe PDF y preséntelo a la Gerencia General.
+                Los hallazgos por dominio facilitan la conversación con cada gerente de área.
+              </p>
+            </div>
+            <div className="bg-white/80 rounded-lg p-3">
+              <h4 className="font-bold text-alico-dark mb-1">Priorizar</h4>
+              <p className="text-xs text-alico-gray">
+                Los dominios con menor madurez y mayor impacto estratégico van primero.
+                Avance al Paso 4 para configurar los dominios.
+              </p>
+            </div>
+            <div className="bg-white/80 rounded-lg p-3">
+              <h4 className="font-bold text-alico-dark mb-1">Medir</h4>
+              <p className="text-xs text-alico-gray">
+                Exporte a Excel para tener la línea base. Repita el diagnóstico
+                en 6 meses para medir progreso.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <motion.button
+              onClick={generarInformeDiagnostico}
+              className="bg-alico-dark text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-900 transition-colors flex items-center gap-2"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Descargar Informe PDF
+            </motion.button>
+            <motion.button
+              onClick={generarDiagnosticoExcel}
+              className="bg-white border border-alico-dark text-alico-dark px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Descargar Excel/CSV
+            </motion.button>
+          </div>
         </div>
       </AnimatedSection>
     </div>

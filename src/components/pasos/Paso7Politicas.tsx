@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getData, saveData, type Politica } from "@/lib/store";
+import { generarDocumentoPolitica } from "@/lib/generarDocumentos";
 import AnimatedSection from "@/components/AnimatedSection";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -136,6 +137,52 @@ export default function Paso7Politicas() {
             Consejo de Gobernanza y comunicadas a toda la organización.
           </p>
         </section>
+      </AnimatedSection>
+
+      {/* Guía de escritura */}
+      <AnimatedSection delay={0.15}>
+        <details className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl overflow-hidden group">
+          <summary className="p-5 cursor-pointer hover:bg-amber-50/80 transition-colors flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <span className="font-bold text-amber-800">¿Cómo escribir una buena política? — Guía rápida</span>
+            </div>
+            <svg className="w-5 h-5 text-amber-600 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div className="px-5 pb-5 space-y-3 text-sm">
+            <div className="bg-white/80 rounded-lg p-4">
+              <p className="font-bold text-amber-800 mb-2">Estructura recomendada para el contenido:</p>
+              <ol className="list-decimal list-inside text-alico-gray space-y-2 ml-1">
+                <li><strong>Principios generales</strong> — Declaraciones de valor (ej: &quot;Los datos son un activo corporativo estratégico de Alico Empaques&quot;)</li>
+                <li><strong>Directrices específicas</strong> — Reglas concretas (ej: &quot;Todo dato maestro requiere aprobación del Data Owner antes de su modificación&quot;)</li>
+                <li><strong>Procedimientos</strong> — El paso a paso para cumplir cada directriz</li>
+                <li><strong>Excepciones</strong> — Cuándo y cómo se permiten desviaciones</li>
+                <li><strong>Monitoreo y cumplimiento</strong> — Cómo se verificará la adopción</li>
+              </ol>
+            </div>
+            <div className="grid md:grid-cols-2 gap-3">
+              <div className="bg-red-50/80 rounded-lg p-3">
+                <p className="font-bold text-red-700 text-xs mb-1">Evite:</p>
+                <p className="text-xs text-red-600">&quot;Los datos deben ser gestionados adecuadamente.&quot;</p>
+              </div>
+              <div className="bg-green-50/80 rounded-lg p-3">
+                <p className="font-bold text-green-700 text-xs mb-1">Prefiera:</p>
+                <p className="text-xs text-green-600">&quot;El Data Owner revisa estándares de calidad trimestralmente y reporta al Consejo.&quot;</p>
+              </div>
+            </div>
+            <p className="text-xs text-amber-700">
+              <strong>Consejo:</strong> No busque perfección en la primera versión. Escriba lo esencial,
+              socialice, recoja feedback y refine. Al guardar, podrá descargar cada política como
+              documento PDF formal desde la página de Herramientas.
+            </p>
+          </div>
+        </details>
       </AnimatedSection>
 
       {/* Resumen de políticas */}
@@ -324,14 +371,24 @@ export default function Paso7Politicas() {
                           />
                         </div>
 
-                        {/* Botón eliminar */}
-                        <div className="pt-2 border-t border-gray-100">
+                        {/* Acciones */}
+                        <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
                           <button
                             type="button"
                             onClick={() => eliminarPolitica(idx)}
                             className="text-sm text-red-600 hover:text-red-800 transition-colors"
                           >
                             Eliminar esta política
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => generarDocumentoPolitica(idx)}
+                            className="text-sm font-medium text-alico-teal hover:text-teal-800 transition-colors flex items-center gap-1"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Descargar como PDF
                           </button>
                         </div>
                       </div>

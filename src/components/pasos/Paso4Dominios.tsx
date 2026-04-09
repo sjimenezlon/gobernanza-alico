@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getData, saveData, type DominioConfig } from "@/lib/store";
+import { generarFichaDominio } from "@/lib/generarDocumentos";
 import AnimatedSection from "@/components/AnimatedSection";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -306,9 +307,9 @@ export default function Paso4Dominios() {
         </section>
       </AnimatedSection>
 
-      {/* Botón Guardar */}
+      {/* Botón Guardar y Descargar */}
       <AnimatedSection delay={0.3}>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <button
             type="button"
             onClick={guardar}
@@ -329,6 +330,25 @@ export default function Paso4Dominios() {
             )}
           </AnimatePresence>
         </div>
+        {dominios.length > 0 && (
+          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p className="text-sm text-blue-800 font-medium mb-2">Descargar fichas individuales por dominio:</p>
+            <div className="flex flex-wrap gap-2">
+              {dominios.map((d) => (
+                <button
+                  key={d.nombre}
+                  onClick={() => generarFichaDominio(d.nombre)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-blue-700 border border-blue-300 hover:bg-blue-100 transition-colors flex items-center gap-1"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3" />
+                  </svg>
+                  {d.nombre}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </AnimatedSection>
 
       <AnimatedSection delay={0.4}>
