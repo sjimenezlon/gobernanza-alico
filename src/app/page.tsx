@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import { PASOS, FASES } from "@/lib/pasos";
+import { EJECUCION_POR_PASO } from "@/lib/ejecucion";
 import { getData } from "@/lib/store";
 
 const fadeUp = {
@@ -31,6 +32,12 @@ export default function Home() {
     setMounted(true);
     const data = getData();
     const done: number[] = [];
+    // Paso 0: se completa cuando los 4 items de ejecución están "completado"
+    const items0 = EJECUCION_POR_PASO[0] ?? [];
+    const completados0 = items0.filter(
+      (it) => data.ejecucion?.[it.id]?.estado === "completado",
+    ).length;
+    if (items0.length > 0 && completados0 === items0.length) done.push(0);
     if (data.diagnostico.length > 0) done.push(1, 2);
     if (data.diagnostico.length >= 10) done.push(3);
     if (data.dominios.length > 0) done.push(4);
@@ -110,10 +117,10 @@ export default function Home() {
               className="mt-8"
             >
               <Link
-                href="/paso/1"
+                href="/paso/0"
                 className="inline-block bg-alico-teal hover:bg-teal-600 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
               >
-                Comenzar
+                Comenzar por el arranque
               </Link>
             </motion.div>
           </div>
@@ -213,7 +220,7 @@ export default function Home() {
               variants={fadeUp}
               transition={{ duration: 0.5 }}
             >
-              Hoja de Ruta: 10 Pasos hacia la Madurez
+              Hoja de Ruta: Arranque + 10 Pasos hacia la Madurez
             </motion.h2>
             {FASES.map((fase, fi) => (
               <motion.div

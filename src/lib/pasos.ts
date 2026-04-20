@@ -9,6 +9,14 @@ export interface Paso {
 
 export const PASOS: Paso[] = [
   {
+    id: 0,
+    titulo: "Arranque y Patrocinio Ejecutivo",
+    subtitulo: "Formalizar el mandato antes de tocar datos",
+    descripcion: "Sin carta de patrocinio, líder nombrado y Consejo convocado, el programa se cae a la primera rotación. Este paso asegura el mandato desde Junta/Gerencia General siguiendo ISO/IEC 38505.",
+    icon: "🎖️",
+    fase: "Fase 0: Arranque",
+  },
+  {
     id: 1,
     titulo: "Contexto y Punto de Partida",
     subtitulo: "Entender por qué la gobernanza de datos es crítica para Alico",
@@ -91,6 +99,7 @@ export const PASOS: Paso[] = [
 ];
 
 export const FASES = [
+  { nombre: "Fase 0: Arranque", color: "bg-rose-600", pasos: [0] },
   { nombre: "Fase 1: Caracterización", color: "bg-blue-600", pasos: [1, 2, 3] },
   { nombre: "Fase 2: Diálogo", color: "bg-teal-600", pasos: [4, 5] },
   { nombre: "Fase 3: Consolidación", color: "bg-amber-600", pasos: [6, 7, 8] },

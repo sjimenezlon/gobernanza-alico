@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import PasoLayout from "@/components/PasoLayout";
+import Paso0Arranque from "@/components/pasos/Paso0Arranque";
 import Paso1Contexto from "@/components/pasos/Paso1Contexto";
 import Paso2Diagnostico from "@/components/pasos/Paso2Diagnostico";
 import Paso3Resultados from "@/components/pasos/Paso3Resultados";
@@ -14,6 +15,7 @@ import Paso9HojaDeRuta from "@/components/pasos/Paso9HojaDeRuta";
 import Paso10Socializacion from "@/components/pasos/Paso10Socializacion";
 
 const COMPONENTES: Record<number, React.ComponentType> = {
+  0: Paso0Arranque,
   1: Paso1Contexto,
   2: Paso2Diagnostico,
   3: Paso3Resultados,

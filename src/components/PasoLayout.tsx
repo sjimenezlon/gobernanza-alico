@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Header from "./Header";
+import EjecucionAlico from "./EjecucionAlico";
 import { PASOS } from "@/lib/pasos";
 
 interface Props {
@@ -14,8 +15,10 @@ export default function PasoLayout({ pasoId, children }: Props) {
   const paso = PASOS.find((p) => p.id === pasoId);
   if (!paso) return null;
 
-  const prev = pasoId > 1 ? pasoId - 1 : null;
-  const next = pasoId < PASOS.length ? pasoId + 1 : null;
+  const ordenados = [...PASOS].sort((a, b) => a.id - b.id);
+  const idx = ordenados.findIndex((p) => p.id === pasoId);
+  const prev = idx > 0 ? ordenados[idx - 1] : null;
+  const next = idx < ordenados.length - 1 ? ordenados[idx + 1] : null;
 
   return (
     <>
@@ -51,7 +54,7 @@ export default function PasoLayout({ pasoId, children }: Props) {
 
           {/* Step indicator dots */}
           <div className="flex items-center gap-2 mt-4">
-            {PASOS.map((p) => (
+            {ordenados.map((p) => (
               <Link
                 key={p.id}
                 href={`/paso/${p.id}`}
@@ -70,7 +73,7 @@ export default function PasoLayout({ pasoId, children }: Props) {
               </Link>
             ))}
             <span className="text-xs text-alico-gray ml-2">
-              {pasoId} de {PASOS.length}
+              {idx + 1} de {ordenados.length}
             </span>
           </div>
         </div>
@@ -88,6 +91,7 @@ export default function PasoLayout({ pasoId, children }: Props) {
             <p className="text-sm text-blue-800 leading-relaxed">{paso.descripcion}</p>
           </div>
           {children}
+          <EjecucionAlico pasoId={pasoId} />
         </div>
       </motion.main>
 
@@ -96,13 +100,13 @@ export default function PasoLayout({ pasoId, children }: Props) {
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           {prev ? (
             <Link
-              href={`/paso/${prev}`}
+              href={`/paso/${prev.id}`}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-alico-dark/5 to-alico-teal/5 text-alico-teal hover:from-alico-dark/10 hover:to-alico-teal/10 transition-smooth text-sm font-medium"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              <span className="hidden sm:inline">Paso {prev}: {PASOS[prev - 1].titulo}</span>
+              <span className="hidden sm:inline">Paso {prev.id}: {prev.titulo}</span>
               <span className="sm:hidden">Anterior</span>
             </Link>
           ) : (
@@ -110,10 +114,10 @@ export default function PasoLayout({ pasoId, children }: Props) {
           )}
           {next ? (
             <Link
-              href={`/paso/${next}`}
+              href={`/paso/${next.id}`}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-alico-teal to-alico-dark text-white hover:opacity-90 transition-smooth text-sm font-medium shadow-sm"
             >
-              <span className="hidden sm:inline">Paso {next}: {PASOS[next - 1].titulo}</span>
+              <span className="hidden sm:inline">Paso {next.id}: {next.titulo}</span>
               <span className="sm:hidden">Siguiente</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

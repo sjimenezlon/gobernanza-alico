@@ -60,6 +60,14 @@ export interface Socializacion {
   responsable: string;
 }
 
+export interface EjecucionEstado {
+  // clave: itemId (ej. "0.1"), valor: datos de ejecución
+  estado: "pendiente" | "en_curso" | "completado";
+  responsableAsignado?: string;
+  fechaObjetivo?: string;
+  notas?: string;
+}
+
 export interface GobernanzaData {
   diagnostico: DiagnosticoRespuesta[];
   dominios: DominioConfig[];
@@ -75,6 +83,7 @@ export interface GobernanzaData {
   kpis: KPI[];
   hojaDeRuta: HitoRuta[];
   socializacion: Socializacion[];
+  ejecucion: Record<string, EjecucionEstado>;
   pasoActual: number;
   ultimaActualizacion: string;
 }
@@ -96,7 +105,8 @@ const defaultData: GobernanzaData = {
   kpis: [],
   hojaDeRuta: [],
   socializacion: [],
-  pasoActual: 1,
+  ejecucion: {},
+  pasoActual: 0,
   ultimaActualizacion: new Date().toISOString(),
 };
 
